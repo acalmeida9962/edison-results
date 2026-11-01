@@ -1,0 +1,129 @@
+<html>
+<head>
+<title>Theranos - Laboratory Results</title>
+<meta name="viewport" content="width=device-width">
+</head>
+<body bgcolor="#FFFDF8" text="#000000" link="#0000EE" vlink="#551A8B">
+<font face="Times New Roman">
+
+<img src="logo.svg" alt="Theranos" width="320"><br>
+<font size="2"><i>"Hundreds of tests from a single drop of blood"&trade;</i></font>
+<hr>
+
+<h1>Laboratory Results Report</h1>
+<hr>
+
+<table border="1" cellpadding="4" cellspacing="0">
+<tr><td bgcolor="#EEEEEE"><b>Patient:</b></td><td id="name"></td></tr>
+<tr><td bgcolor="#EEEEEE"><b>MRN:</b></td><td id="mrn"></td></tr>
+<tr><td bgcolor="#EEEEEE"><b>Collected:</b></td><td id="date"></td></tr>
+<tr><td bgcolor="#EEEEEE"><b>Specimen:</b></td><td>Blood, 1 drop (approx.)</td></tr>
+<tr><td bgcolor="#EEEEEE"><b>Ordering Physician:</b></td><td id="doc"></td></tr>
+</table>
+
+<h2>Results</h2>
+<table border="1" cellpadding="4" cellspacing="0" width="100%">
+<tr bgcolor="#000080">
+<th><font color="#FFFFFF">Test</font></th>
+<th><font color="#FFFFFF">Result</font></th>
+<th><font color="#FFFFFF">Flag</font></th>
+<th><font color="#FFFFFF">Reference Range</font></th>
+</tr>
+<tbody id="results"></tbody>
+</table>
+<p><font size="2">H = High &nbsp; L = Low &nbsp; !! = Critical, please consult a physician or a bartender</font></p>
+
+<h2>Pathologist Comments</h2>
+<p id="comment"></p>
+
+<hr>
+<p><font size="2"><b>Disclaimer:</b> These results were obtained using the Edison&trade; device and have not been evaluated by the FDA, the CDC, or anyone really. For entertainment purposes only. Happy Halloween.</font></p>
+<p><a href="results.html">Run Tests Again</a> | <a href="index.html">Log Out</a></p>
+<hr>
+<i><a href="index.html">Theranos</a><br>
+Last updated: August 1996</i>
+
+</font>
+
+<script>
+function rnd(a, b, dp) { return (a + Math.random() * (b - a)).toFixed(dp || 0); }
+function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+
+// [name, unit, lo, hi, minValue, maxValue, decimals]  -> numeric, flagged vs lo/hi
+// [name, [possible text results], normalResult]       -> text
+var tests = [
+  ["Cholesterol, Total", "mg/dL", 125, 200, 90, 320],
+  ["Glucose, Fasting", "mg/dL", 70, 99, 55, 180],
+  ["Hemoglobin", "g/dL", 12, 17.5, 9, 20, 1],
+  ["White Blood Cell Count", "K/uL", 4.5, 11, 2, 18, 1],
+  ["Platelets", "K/uL", 150, 400, 80, 600],
+  ["Sodium", "mmol/L", 135, 145, 125, 155],
+  ["Potassium", "mmol/L", 3.5, 5.1, 2.8, 6.2, 1],
+  ["Vitamin D", "ng/mL", 30, 100, 5, 120],
+  ["Iron", "ug/dL", 60, 170, 20, 250],
+  ["Odds of Getting Drunk Tonight", "%", 0, 50, 10, 100],
+  ["Pumpkin Spice Saturation", "%", 0, 15, 0, 99],
+  ["Candy Corn Tolerance", "kernels", 3, 12, 0, 40],
+  ["Residual Theranos Optimism", "units", 0, 10, 0, 100],
+  ["Caffeine", "mg/dL", 0, 4, 0, 30, 1],
+  ["Rizz Index", "rz", 40, 80, 0, 120],
+  ["Hours Until Hangover", "hr", 8, 14, 2, 30],
+  ["Probability of Texting Ex", "%", 0, 5, 0, 100],
+  ["Blood Alcohol (Projected 2am)", "%", 0, 0.08, 0, 0.3, 2],
+  ["Vampire Appeal", "bites/hr", 0, 2, 0, 12, 1],
+  ["Dance Floor Endurance", "songs", 4, 12, 0, 40],
+  ["Midichlorian Count", "per cell", 2500, 7000, 1000, 25000],
+  ["Sugar Crash ETA", "min", 60, 180, 5, 300],
+  ["Costume Effort Score", "/10", 6, 10, 1, 10],
+  ["Gossip Retention", "%", 20, 60, 0, 100],
+  ["Willingness to Do Karaoke", "%", 0, 40, 0, 100],
+  ["Blood Type", ["O+", "A+", "B-", "AB+", "Fruit Punch", "Unknown (insufficient sample)", "Type 2 Monster Energy"], null],
+  ["Zodiac Compatibility", ["Normal", "Gemini (concerning)", "Mercury in Retrograde", "Inconclusive"], "Normal"],
+  ["Ghost Detected in Sample", ["None", "Trace", "Friendly", "Present - Do Not Turn Around"], "None"],
+  ["Main Character Syndrome", ["Negative", "Positive", "Borderline", "Severe"], "Negative"],
+  ["Elizabeth Holmes Voice Depth", ["Normal", "Deep", "Very Deep", "Investor-Grade"], "Normal"],
+  ["Werewolf Antibodies", ["Negative", "Positive (full moon pending)"], "Negative"],
+  ["Sample Quality", ["Adequate", "Diluted", "Mostly Ketchup", "Reused from Previous Patient"], "Adequate"]
+];
+
+var comments = [
+  "Results consistent with someone who is about to have a great night. Hydrate.",
+  "Sample appears to be mostly candy. Patient advised to eat one (1) vegetable.",
+  "All findings within normal limits, which is statistically impossible for this device. Please repeat.",
+  "Device rebooted 4 times during analysis. Results are probably fine.",
+  "Elevated levels of chaos detected. Recommend water between drinks.",
+  "Patient has been cleared for the dance floor. Good luck.",
+  "Results reviewed and approved by our board of directors, none of whom are doctors."
+];
+
+var name = new URLSearchParams(location.search).get("name") || "DOE, JOHN";
+document.getElementById("name").textContent = name.toUpperCase();
+document.getElementById("mrn").textContent = rnd(10000000, 99999999);
+document.getElementById("date").textContent = new Date().toLocaleString();
+document.getElementById("doc").textContent = pick(["Dr. Sunny Balwani", "Dr. Frank N. Stein", "Dr. Acula", "Dr. Pepper", "Dr. Nick Riviera"]);
+document.getElementById("comment").textContent = pick(comments);
+
+var chosen = tests.sort(function () { return Math.random() - 0.5; }).slice(0, 14);
+var rows = "";
+chosen.forEach(function (t) {
+  var result, flag = "", range;
+  if (Array.isArray(t[1])) {
+    result = pick(t[1]);
+    range = t[2] || "&mdash;";
+    if (t[2] && result !== t[2]) flag = "!!";
+  } else {
+    var v = parseFloat(rnd(t[4], t[5], t[6]));
+    result = v + " " + t[1];
+    range = t[2] + " - " + t[3];
+    if (v > t[3]) flag = "H";
+    if (v < t[2]) flag = "L";
+  }
+  var color = flag ? "#CC0000" : "#000000";
+  rows += "<tr><td>" + t[0] + "</td><td><font color='" + color + "'><b>" + result +
+          "</b></font></td><td align='center'><font color='#CC0000'><b>" + flag +
+          "</b></font></td><td>" + range + "</td></tr>";
+});
+document.getElementById("results").innerHTML = rows;
+</script>
+</body>
+</html>
