@@ -33,15 +33,6 @@
 </table>
 <p><font size="2">H = High &nbsp; L = Low &nbsp; !! = Critical, please consult a physician or a bartender</font></p>
 
-<h2>Pathologist Comments</h2>
-<p id="comment"></p>
-
-<hr>
-<p><font size="2"><b>Disclaimer:</b> These results were obtained using the Edison&trade; device and have not been evaluated by the FDA, the CDC, or anyone really. For entertainment purposes only. Happy Halloween.</font></p>
-<p><a href="results.html">Run Tests Again</a> | <a href="index.html">Log Out</a></p>
-<hr>
-<i><a href="index.html">Theranos</a><br>
-Last updated: August 1996</i>
 
 </font>
 
@@ -86,22 +77,12 @@ var tests = [
   ["Sample Quality", ["Adequate", "Diluted", "Mostly Ketchup", "Reused from Previous Patient"], "Adequate"]
 ];
 
-var comments = [
-  "Results consistent with someone who is about to have a great night. Hydrate.",
-  "Sample appears to be mostly candy. Patient advised to eat one (1) vegetable.",
-  "All findings within normal limits, which is statistically impossible for this device. Please repeat.",
-  "Device rebooted 4 times during analysis. Results are probably fine.",
-  "Elevated levels of chaos detected. Recommend water between drinks.",
-  "Patient has been cleared for the dance floor. Good luck.",
-  "Results reviewed and approved by our board of directors, none of whom are doctors."
-];
 
 var name = new URLSearchParams(location.search).get("name") || "DOE, JOHN";
 document.getElementById("name").textContent = name.toUpperCase();
 document.getElementById("mrn").textContent = rnd(10000000, 99999999);
 document.getElementById("date").textContent = new Date().toLocaleString();
 document.getElementById("doc").textContent = pick(["Dr. Sunny Balwani", "Dr. Frank N. Stein", "Dr. Acula", "Dr. Pepper", "Dr. Nick Riviera"]);
-document.getElementById("comment").textContent = pick(comments);
 
 var chosen = tests.sort(function () { return Math.random() - 0.5; }).slice(0, 14);
 var rows = "";
